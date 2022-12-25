@@ -244,6 +244,17 @@ class Reporter:
         for balance in ret[1]:
             account = balance[0]
             inventory = balance[1]
+
+            part = ""
+            for p in account.split(":"):
+                if len(part) > 0: part += ":"
+                part += p
+                if part in category_map:
+                    category_map[account] = category_map[part]
+
+                if part in equity_map:
+                    equity_map[account] = equity_map[part]
+
             if account not in category_map:
                 if account.startswith("Assets"):
                     raise Exception(
